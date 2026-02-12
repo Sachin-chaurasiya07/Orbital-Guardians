@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Space Debris Risk Analysis System - Design System
+   Aesthetic: Mission Control / Deep Space Command Center
+   Dark, technical, scientific credibility
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    /* Deep space dark theme - primary palette */
+    --background: 222 47% 6%;
+    --foreground: 210 40% 96%;
+    
+    /* Card surfaces - slightly elevated from background */
+    --card: 222 47% 9%;
+    --card-foreground: 210 40% 96%;
+    
+    /* Popover/dropdown surfaces */
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 96%;
+    
+    /* Primary: Electric Cyan - data, orbits, interactive elements */
+    --primary: 192 91% 54%;
+    --primary-foreground: 222 47% 6%;
+    
+    /* Secondary: Slate blue - secondary UI */
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 90%;
+    
+    /* Muted: Dim slate for backgrounds */
+    --muted: 217 33% 14%;
+    --muted-foreground: 215 20% 55%;
+    
+    /* Accent: Soft blue glow */
+    --accent: 199 89% 48%;
+    --accent-foreground: 210 40% 98%;
+    
+    /* Destructive/Critical: Alert red for high-risk */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+    
+    /* Borders and inputs */
+    --border: 217 33% 20%;
+    --input: 217 33% 17%;
+    --ring: 192 91% 54%;
+    
+    --radius: 0.5rem;
+    
+    /* Risk level colors */
+    --risk-critical: 0 72% 51%;
+    --risk-warning: 38 92% 50%;
+    --risk-safe: 152 69% 41%;
+    --risk-low: 192 91% 54%;
+    
+    /* Risk foregrounds for badges */
+    --risk-warning-foreground: 222 47% 6%;
+    --risk-safe-foreground: 222 47% 6%;
+    
+    /* Orbital visualization colors */
+    --orbit-satellite: 192 91% 54%;
+    --orbit-debris: 0 72% 51%;
+    --orbit-selected: 45 93% 58%;
+    --orbit-path: 217 33% 35%;
+    
+    /* Glow effects */
+    --glow-primary: 192 91% 54%;
+    --glow-warning: 38 92% 50%;
+    --glow-critical: 0 72% 51%;
+    
+    /* Gradients */
+    --gradient-space: linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(222 47% 3%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(222 47% 11%) 0%, hsl(222 47% 8%) 100%);
+    --gradient-critical: linear-gradient(135deg, hsl(0 72% 51% / 0.2) 0%, hsl(0 72% 40% / 0.1) 100%);
+    --gradient-warning: linear-gradient(135deg, hsl(38 92% 50% / 0.2) 0%, hsl(38 92% 40% / 0.1) 100%);
+    --gradient-safe: linear-gradient(135deg, hsl(152 69% 41% / 0.2) 0%, hsl(152 69% 30% / 0.1) 100%);
+    
+    /* Sidebar - mission control panel */
+    --sidebar-background: 222 47% 7%;
+    --sidebar-foreground: 210 40% 90%;
+    --sidebar-primary: 192 91% 54%;
+    --sidebar-primary-foreground: 222 47% 6%;
+    --sidebar-accent: 217 33% 17%;
+    --sidebar-accent-foreground: 210 40% 90%;
+    --sidebar-border: 217 33% 18%;
+    --sidebar-ring: 192 91% 54%;
+  }
+
+  /* No light mode - this is a space command center */
+  .dark {
+    --background: 222 47% 6%;
+    --foreground: 210 40% 96%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    background: var(--gradient-space);
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  /* Glowing border effect for cards */
+  .glow-border {
+    @apply relative;
+    box-shadow: 
+      0 0 0 1px hsl(var(--border)),
+      0 0 20px -5px hsl(var(--glow-primary) / 0.3);
+  }
+  
+  .glow-border-critical {
+    box-shadow: 
+      0 0 0 1px hsl(var(--risk-critical) / 0.5),
+      0 0 30px -5px hsl(var(--glow-critical) / 0.4);
+  }
+  
+  .glow-border-warning {
+    box-shadow: 
+      0 0 0 1px hsl(var(--risk-warning) / 0.5),
+      0 0 30px -5px hsl(var(--glow-warning) / 0.4);
+  }
+  
+  .glow-border-safe {
+    box-shadow: 
+      0 0 0 1px hsl(var(--risk-safe) / 0.5),
+      0 0 20px -5px hsl(var(--risk-safe) / 0.3);
+  }
+
+  /* Scanline effect for retro-futuristic feel */
+  .scanlines::before {
+    content: "";
+    @apply absolute inset-0 pointer-events-none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      hsl(var(--primary) / 0.03) 2px,
+      hsl(var(--primary) / 0.03) 4px
+    );
+    z-index: 10;
+  }
+
+  /* Data readout text styling */
+  .data-readout {
+    @apply font-mono text-sm tracking-wider;
+    text-shadow: 0 0 10px hsl(var(--primary) / 0.5);
+  }
+
+  /* Risk badge variants */
+  .risk-badge-critical {
+    @apply bg-destructive/20 text-destructive border border-destructive/50;
+  }
+  
+  .risk-badge-warning {
+    @apply border;
+    background: hsl(var(--risk-warning) / 0.2);
+    color: hsl(var(--risk-warning));
+    border-color: hsl(var(--risk-warning) / 0.5);
+  }
+  
+  .risk-badge-safe {
+    @apply border;
+    background: hsl(var(--risk-safe) / 0.2);
+    color: hsl(var(--risk-safe));
+    border-color: hsl(var(--risk-safe) / 0.5);
+  }
+
+  /* Animated pulse for critical alerts */
+  .pulse-critical {
+    animation: pulse-critical 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse-critical {
+    0%, 100% {
+      box-shadow: 0 0 0 0 hsl(var(--risk-critical) / 0.4);
+    }
+    50% {
+      box-shadow: 0 0 20px 10px hsl(var(--risk-critical) / 0.1);
+    }
+  }
+
+  /* Grid background pattern */
+  .grid-pattern {
+    background-image: 
+      linear-gradient(hsl(var(--border) / 0.3) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.3) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  /* Orbital path styling */
+  .orbital-glow {
+    filter: drop-shadow(0 0 6px hsl(var(--orbit-satellite)));
+  }
+}
+
+@layer utilities {
+  /* Text glow utilities */
+  .text-glow {
+    text-shadow: 0 0 10px currentColor;
+  }
+  
+  .text-glow-strong {
+    text-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+  }
+
+  /* Backdrop blur for panels */
+  .glass-panel {
+    @apply backdrop-blur-md bg-card/80;
+  }
+}
